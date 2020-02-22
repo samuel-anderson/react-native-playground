@@ -11,6 +11,12 @@ export default function App() {
     setGoals(goals => [...goals, {id: Math.random().toString(), value: goalTitle}])
 
   }
+
+  const removeHandler = goalId => {
+    setGoals(goals => {
+      return goals.filter((goal) => goal.id !== goalId)
+    })
+  }
   return (
     <View style={styles.root}>
       <GoalInput onAddGoal= {addHandler}/>
@@ -18,7 +24,7 @@ export default function App() {
       <FlatList 
         keyExtractor= {(item, index) => item.id}
         data={goals} 
-        renderItem= { itemData => <GoalItem onDelete={()=> console.log("Testing")} children={itemData.item.value} />}
+        renderItem= { itemData => <GoalItem id={itemData.item.id} onDelete={removeHandler} children={itemData.item.value} />}
       />
     </View>
 
